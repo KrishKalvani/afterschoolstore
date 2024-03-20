@@ -1,5 +1,9 @@
 <template>
   <div class="app">
+    <head>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+
+    </head>
     <div id="navigation" style="background-color: #110d78">
       <a href="afterSchool.html"><img id="logo" src="cw1logo.png" /></a
       ><!--website logo-->
@@ -75,12 +79,9 @@
     <!-- </div> -->
     <header>
       <!-- <h1>{{sitename}}</h1> -->
-      <button
-        id="checkOutButton"
-        @click="showCheckout"
-        :disabled="cart.length === 0 && showLesson"
-      >
-        {{ this.cart.length }}Checkout
+      <button id="checkOutButton" @click="showCheckout" :disabled="cart.length === 0 && showLesson">
+        <!-- <span class="fas fa-cart-plus">Checkout</span> -->
+        <span class="fas fa-cart-plus"><br>{{ this.cart.length }} Checkout</span>
       </button>
     </header>
     <main>
