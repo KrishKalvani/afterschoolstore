@@ -19,8 +19,10 @@
             <p>Subject: {{ lesson.subject }}</p>
             <p>Location: {{ lesson.location }}</p>
             <p>Price (AED): {{ lesson.price }}</p>
-            <p>Spaces: {{lesson.spaces }}</p>
-            <button id="addtocartButton" @click="add(lesson)">Add to cart</button>
+            <p>Spaces: {{lesson.spaces}}</p>
+            <button id="addtocartButton" @click="add(lesson)" v-if="canAddToCart(lesson)" >Add to cart</button>
+            <button id="disabledAddToCartButton" disabled="disabled" v-else>Sold <br> Out</button>
+
             <!--this buttons check if we can add to the cart-->
             <!-- <button style="margin-bottom: 60px;" id="addtocartButton" v-on:click="addToCart(lesson)" v-if="canAddToCart(lesson)">Add to Cart</button>
             <button id="disabledAddToCartButton" disabled="disabled" v-else>Sold <br> Out</button>sold out if the button gets disabled meaning we can't add to the cart anymore -->
@@ -33,110 +35,20 @@
 <script>
 export default {
   name: "ProductList",
-  data() {
-    return {
-      lessons: [
-        {
-        id: 1001,
-        image: "MathIcon.jpg",
-        subject: "Math",
-        location: "Nahda",
-        price: 100,
-        spaces: 5,
-        cartItemCount: 0 //this is there for every lesson object because I want to track whether this specific lesson is there in the cart
-      },
-      {
-        id: 1002,
-        image: "MicroBio.png",
-        subject: "Microbiology",
-        location: "Qouz",
-        price: 90,
-        spaces: 5,
-        cartItemCount: 0 //its set to 0 because initially there is nothing in the cart at first
-      },
-      {
-        id: 1003,
-        image: "organicChem.png",
-        subject: "Organic Chemistry",
-        location: "Barsha",
-        price: 150,
-        spaces: 5,
-        cartItemCount: 0
-      },
-      {
-        id: 1004,
-        image: "physIcon.png",
-        subject: "Physics",
-        location: "Dubai Museum",
-        price: 100,
-        spaces: 5,
-        cartItemCount: 0
-      },
-      {
-        id: 1005,
-        image: "advancedMath.png",
-        subject: "Advanced Math",
-        location: "Knowledge Village",
-        price: 120,
-        spaces: 5,
-        cartItemCount: 0
-      },
-      {
-        id: 1006,
-        image: "advancedEnglish.jpg",
-        subject: "Advanced English",
-        location: "Buhairah",
-        price: 80,
-        spaces: 5,
-        cartItemCount: 0
-      },
-      {
-        id: 1007,
-        image: "musicIcon.png",
-        subject: "Music",
-        location: "Dubai Opera",
-        price: 90,
-        spaces: 5,
-        cartItemCount: 0
-      },
-      {
-        id: 1008,
-        image: "engIcon.png",
-        subject: "English",
-        location: "City Walk",
-        price: 70,
-        spaces: 5,
-        cartItemCount: 0
-
-      },
-      {
-        id: 1009,
-        image: "chemistryIcon.png",
-        subject: "Chemistry",
-        location: "Jumeriah",
-        price: 100,
-        spaces: 5,
-        cartItemCount: 0
-      },
-      {
-        id: 1010,
-        image: "bioIcon.png",
-        subject: "Biology",
-        location: "Rolla",
-        price: 100,
-        spaces: 5,
-        cartItemCount: 0
-      },
-      ],
-    };
-  },
+  props: ['lessons'],
   methods:{
     add(lesson){
         console.log("added product", lesson.id);
         this.$emit('addProduct', lesson);
     },
+    canAddToCart: function (lesson) { //checks if we can add to the cart or not, we put this in a v-if else so we can disable the add to cart button
+      return lesson.spaces > 0; //checks if the spaces is more than the lessons that have been added
+    },
   },
+
 };
+
+
 </script>
 
 <style scoped>

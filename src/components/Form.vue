@@ -9,7 +9,7 @@
           <th>Subject</th>
           <th>Location</th>
           <th>Price</th>
-          <!-- <th>Stock</th> -->
+          <th>Stock</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +20,7 @@
           <td>{{ product.subject }}</td>
           <td>{{ product.location }}</td>
           <td>Price: {{ product.price }}</td>
+          <td>Spaces: {{product.spaces}}</td>
           <td>
             <button @click="removeItem(index)">Remove</button>
           </td>
@@ -66,7 +67,9 @@ export default {
   },
   methods: {
     removeItem(index) {
+        console.log("Attempting to remove item at index:", index);
       this.$emit("remove-item", index);
+      console.log("form function done")
     },
     submitForm() {
       console.log("Form submitted with:", this.name, this.address);
