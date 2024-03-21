@@ -4,7 +4,7 @@ var cacheFiles = [
     'index.html',
     '/src/main.js',
     '/favicon.ico',
-    'afterSchoolstore.webmanifest',
+    'afterschoolstore.webmanifest',
     'advancedEnglish.jpg',
     'advancedMath.png',
     'bioIcon.png',
