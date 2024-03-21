@@ -20,7 +20,7 @@
           <td>{{ product.subject }}</td>
           <td>{{ product.location }}</td>
           <td>Price: {{ product.price }}</td>
-          <td>Spaces: {{product.spaces}}</td>
+          <td>Spaces: {{ product.spaces }}</td>
           <td>
             <button @click="removeItem(index)">Remove</button>
           </td>
@@ -34,24 +34,43 @@
         <div id="nameCredential">
           <strong>Name:</strong>
           <input v-model="name" type="text" />
+          <!-- <span v-if="!nameValidation">Please enter a valid name.</span> -->
         </div>
         <div id="phoneCredential">
           <strong>Phone No.:</strong>
           <input v-model="phone" type="tel" />
+          <!-- <span v-if="!phoneValidation">Please enter a valid phone number.</span> -->
         </div>
       </div>
     </div>
 
-     <h2 id="orderInfoHeading">Order Information</h2>
+    <h2 id="orderInfoHeading">Order Information</h2>
     <div id="orderInfoBox">
       <div id="orderInfoDetails">
-        <strong>Name (autofilled): </strong><p>{{name}}</p>
-        <strong>Phone Number (autofilled): </strong><p>{{phone}}</p>
+        <strong>Name (autofilled): </strong>
+        <p>{{ name }}</p>
+        <strong>Phone Number (autofilled): </strong>
+        <p>{{ phone }}</p>
       </div>
     </div>
-    <p style="font-size: small;font-family: Arial, Helvetica, sans-serif; text-align: center; margin-left: 50%;">Make sure to enter the valid form of credentials to place order</p>
+    <p
+      style="
+        font-size: small;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        margin-left: 50%;
+      "
+    >
+      Make sure to enter the valid form of credentials to place order
+    </p>
     <!-- <button id="PlaceOrderButton" @click="submitForm" :disabled="!credentialsValidation">Place Order</button> -->
-    <button id="PlaceOrderButton" @click="submitForm">Place Order</button>
+    <button
+      id="PlaceOrderButton"
+      @click="submitForm"
+      :disabled="!credentialsValidation"
+    >
+      Place Order
+    </button>
   </div>
 </template>
 
@@ -67,13 +86,33 @@ export default {
   },
   methods: {
     removeItem(index) {
-        console.log("Attempting to remove item at index:", index);
+      console.log("Attempting to remove item at index:", index);
       this.$emit("remove-item", index);
-      console.log("form function done")
+      console.log("form function done");
     },
     submitForm() {
-      console.log("Form submitted with:", this.name, this.address);
-      (this.name = ""), (this.phone = "");
+      if (this.cart.length === 0) {
+        alert("Please add lessons to your cart to place an order.");
+      } else {
+        alert("Order Submitted. Thank you!");
+      }
+      this.$emit('empty-cart')
+    //   console.log("Form submitted with:", this.name, this.phone);
+    //   (this.name = ""), (this.phone = "");
+    },
+  },
+  computed: {
+    nameValidation: function () {
+      //this checks if we are typing only letters
+      return /^[A-Za-z\s]+$/.test(this.name);
+    },
+    phoneValidation: function () {
+      //this checks if we are typing only numbers
+      return /^[0-9]+$/.test(this.phone);
+    },
+    credentialsValidation: function () {
+      //this checks if both are correct and then disabled if its not correct, from the html side
+      return this.nameValidation && this.phoneValidation;
     },
   },
 };

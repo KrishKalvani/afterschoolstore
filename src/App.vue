@@ -32,22 +32,23 @@
     </h3>
     <!--welcome message-->
     <!-- <div v-if="showLesson"> v-if here also because I don't want the sort buttons to be there in the checkout page -->
+      <div v-if="showLesson">
 
     <div id="sortPriceButtons">
       <!--here are all the sorting buttons- sort by price-->
-      <button v-on:click="sortByPrice('ascending')">
+      <button @click="sortByPrice('ascending')">
         Sort by Price (Low to High)
       </button>
-      <button v-on:click="sortByPrice('descending')">
+      <button @click="sortByPrice('descending')">
         Sort by Price (High to Low)
       </button>
     </div>
     <div id="sortSubButtons">
       <!--sort by subject-->
-      <button id="sortSubButton" v-on:click="sortAlphabetically('ascending')">
+      <button id="sortSubButton" @click="sortAlphabetically('ascending')">
         Sort by Subject (A to Z)
       </button>
-      <button id="sortSubButton" v-on:click="sortAlphabetically('descending')">
+      <button id="sortSubButton" @click="sortAlphabetically('descending')">
         Sort by Subject (Z to A)
       </button>
     </div>
@@ -55,25 +56,26 @@
       <!--sort by location-->
       <button
         id="sortLocButtons"
-        v-on:click="sortLocationAlphabetically('ascending')"
+        @click="sortLocationAlphabetically('ascending')"
       >
         Sort by Location (A to Z)
       </button>
       <button
         id="sortLocButtons"
-        v-on:click="sortLocationAlphabetically('descending')"
+        @click="sortLocationAlphabetically('descending')"
       >
         Sort by Location (Z to A)
       </button>
     </div>
     <div id="sortSpacesButtons">
       <!--sort by spaces-->
-      <button v-on:click="sortBySpaces('ascending')">
+      <button @click="sortBySpaces('ascending')">
         Sort by Spaces (Low to High)
       </button>
-      <button v-on:click="sortBySpaces('descending')">
+      <button @click="sortBySpaces('descending')">
         Sort by Spaces (High to Low)
       </button>
+      </div>
     </div>
 
     <!-- </div> -->
@@ -87,11 +89,11 @@
     <main>
       <product-list
         v-if="showLesson"
-        :lessons="lessons"
+        :lessons="lessonList"
         @addProduct="addToCart"
-      ></product-list>
+      ></product-list> <!--addProduct is the event, the addTocart is the method thats linked here-->
       <!-- <checkout v-else :cart="cart"></checkout> -->
-      <checkout v-else :cart="cart" @remove-item="removeFromCart"></checkout>
+      <checkout v-else :cart="cart" @remove-item="removeFromCart" @empty-cart="emptyCart"></checkout>
     </main>
     <div id="footer">
       <p style="margin-left: 45%">Web page made by Krish Kalvani</p>
@@ -114,6 +116,7 @@ export default {
     return {
       sitename: "AfterSchool",
       cart: [],
+      // lessonList:[],
       showLesson: true,
       searchValue: "",
       sortOrder: "ascending",
@@ -212,6 +215,9 @@ export default {
     };
   },
   methods: {
+    emptyCart(){
+      this.cart=[];
+    },
     showCheckout() {
       this.showLesson = this.showLesson ? false : true; // Show the checkout form
     },
@@ -247,8 +253,85 @@ export default {
       lessonToUpdate.spaces++;
     }
   },
+
+  sortByPrice: function (order) {//order is the parameter where it will either be ascending or descending
+      this.sortOrder = order; //storing it on sortOrder
+      this.lessons.sort((a, b) => { //lets assume a and b are the objects (each lesson) in our lessons array, sort performs the ascending 
+        //and descending/sorting
+        if (order === 'ascending') {//if order is ascedning...
+          return a.price - b.price;//display the first detected lesson minus the 2nd one
+        } else if (order === 'descending') {// similarly for descending but 2nd lesson minus the 1st
+          return b.price - a.price;
+        }
+        return 0; // this will not display any change if theres no ascending or descending detected
+      });
+    },
+
+    sortAlphabetically: function (order){//sorting the subjects, using localeCompare as its used for arrange strings
+        this.sortOrder= order;
+        this.lessons.sort((a,b)=>{
+          if(order==='ascending'){
+            return a.subject.localeCompare(b.subject); //localeCompare compares 2 strings and returns a value that shows their order
+            //if one string (A) is before another string (B), it will return a -ve number and sort in ascending order
+          } else if (order==='descending') { //Similar concept for (B) before (A) i.e., descending order
+            return b.subject.localeCompare(a.subject);
+          }
+          return 0;
+        });
+      },
+
+    
+
+
+
+    sortLocationAlphabetically: function (order) {//sorting the location, using localeCompare as its used for arrange strings
+      this.sortOrder = order;
+      this.lessons.sort((a, b) => {
+        if (order === 'ascending') {
+          return a.location.localeCompare(b.location); //localeCompare compares 2 strings and returns a value that shows their order
+          //if one string (A) is before another string (B), it will return a -ve number and sort in ascending order
+        } else if (order === 'descending') { //Similar concept for (B) before (A) i.e., descending order
+          return b.location.localeCompare(a.location);
+        }
+        return 0;
+      });
+    },
+
+    sortBySpaces: function (order) {//order is the parameter where it will either be ascending or descending
+      this.sortOrder = order;
+      this.lessons.sort((a, b) => { //lets assume a and b are the objects (each lesson) in our lessons array, sort performs the ascending 
+        //and descending
+        if (order === 'ascending') {//if order is ascedning...
+          return (a.spaces-a.cartItemCount) - (b.spaces-b.cartItemCount);//display the first detected lesson minus the 2nd one but here
+          //we dynamically check the cartItemCount's value (from each lesson) to sort the spaces
+        } else if (order === 'descending') {// similarly for descending but 2nd lesson minus the 1st
+          return (b.spaces-b.cartItemCount)-(a.spaces-a.cartItemCount);
+        }
+        return 0; // this will not display any change if theres no ascending or descending detected
+      });
+    },
     
   },
+  computed:{
+     lessonList(){ // i modified the previouse code to search by location as well
+      if(this.searchValue.trim().length>0){ //if the user searches something
+        return (this.lessons.filter((lesson)=>{// then return the following
+          let lowerCaseSearch= this.searchValue.trim().toLowerCase(); //this stores all the search values in lowerCase
+          let subjectSearch= lesson.subject.toLowerCase().includes(lowerCaseSearch);//searches by subject, we lowerCase the subject so we can get
+          //results for searching a small letter, we do the lowerCasing during the search (in the includes) so that we can search big letters, we just want to make it
+          //case insensitive
+          let locationSearch= lesson.location.toLowerCase().includes(lowerCaseSearch);
+          return subjectSearch||locationSearch;
+
+        }));
+        
+        
+      }
+      return this.lessons;//this displays all the lessons at default when nothing is searched
+
+    }
+  }
+  
 };
 </script>
 
