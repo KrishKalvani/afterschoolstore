@@ -4,7 +4,7 @@ var cacheFiles = [
     './index.html',
     './css/app.089c0b8b.css', // The exact file name will change with each build
     './js/app.6b492590.js', // The file name hash will change with each build
-    './js/chunk-vendors.94abea6b/js', // Include the full file name, the hash will change with each build
+    './js/chunk-vendors.94abea6b.js', // Include the full file name, the hash will change with each build
     './advancedEnglish.jpg',
     './advancedMath.png',
     './bioIcon.png',
