@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!-- <div v-for="lesson in lessons" :key="lesson.id">
-      <h2>{{ lesson.subject }}</h2>
-      <figure>
-        <img id="productImage" v-bind:src="lesson.image" />
-      </figure>
-      <p v-html="lesson.description"></p>
-      <p>Price:{{ lesson.price }}</p>
-      <p>Available stock: {{ lesson.spaces }}</p>
-      <button @click="add(lesson)">Add to cart</button>
-    </div> -->
     <div id="lessonsGrid">
     <div id="lessonCard" v-for="lesson in lessons" :key="lesson.id"><!--lessonCard for CSS, v-for to iterate over the lessons array (now lessons list array) to display the lessons-->
           <figure>
@@ -22,10 +12,6 @@
             <p>Spaces: {{lesson.spaces}}</p>
             <button id="addtocartButton" @click="add(lesson)" v-if="canAddToCart(lesson)" >Add to cart</button>
             <button id="disabledAddToCartButton" disabled="disabled" v-else>Sold <br> Out</button>
-
-            <!--this buttons check if we can add to the cart-->
-            <!-- <button style="margin-bottom: 60px;" id="addtocartButton" v-on:click="addToCart(lesson)" v-if="canAddToCart(lesson)">Add to Cart</button>
-            <button id="disabledAddToCartButton" disabled="disabled" v-else>Sold <br> Out</button>sold out if the button gets disabled meaning we can't add to the cart anymore -->
           </main>
         </div>
         </div>
