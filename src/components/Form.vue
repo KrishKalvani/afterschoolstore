@@ -67,8 +67,7 @@
     <button
       id="PlaceOrderButton"
       @click="submitForm"
-      :disabled="!credentialsValidation"
-    >
+      :disabled="!credentialsValidation">
       Place Order
     </button>
   </div>
