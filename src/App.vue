@@ -5,7 +5,7 @@
 
     </head>
     <div id="navigation" style="background-color: #110d78">
-      <a href="afterSchool.html"><img id="logo" src="cw1logo.png" /></a
+      <a href="index.html"><img id="logo" src="cw1logo.png" /></a
       ><!--website logo-->
       <p
         style="

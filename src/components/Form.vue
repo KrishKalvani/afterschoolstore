@@ -86,7 +86,7 @@ export default {
   methods: {
     removeItem(index) {
       console.log("Attempting to remove item at index:", index);
-      this.$emit("remove-item", index);
+      this.$emit("remove-item", index); //when user clicks remove button, we emit a remove-item event with the index of the lesson to be removed
       console.log("form function done");
     },
     submitForm() {
@@ -95,7 +95,7 @@ export default {
       } else {
         alert("Order Submitted. Thank you!");
       }
-      this.$emit('empty-cart')
+      this.$emit('empty-cart') //emit an empty cart event to clear the cart
     //   console.log("Form submitted with:", this.name, this.phone);
     //   (this.name = ""), (this.phone = "");
     },
