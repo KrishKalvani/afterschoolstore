@@ -1,22 +1,25 @@
 //we do this to know how to cache it
 var cacheName = 'AS-CW3';
 var cacheFiles = [
-    'index.html',
-    '/src/main.js',
-    '/favicon.ico',
-    'afterschoolstore.webmanifest',
-    'advancedEnglish.jpg',
-    'advancedMath.png',
-    'bioIcon.png',
-    'chemistryIcon.png',
-    'cw1logo.png',
-    'icon-store-512.png',
-    'engIcon.png',
-    'MathIcon.jpg',
-    'MicroBio.png',
-    'musicIcon.png',
-    'organicChem.png',
-    'physIcon.png'
+    './index.html',
+    './css/app.089c0bb8.css', // The exact file name will change with each build
+    './js/app.771cd947.js', // The file name hash will change with each build
+    './js/app.771cd947.js.map',
+    './js/chunk-vendors.94abea6b.js.map', // Include the full file name, the hash will change with each build
+    './advancedEnglish.jpg',
+    './advancedMath.png',
+    './bioIcon.png',
+    './chemistryIcon.png',
+    './cw1logo.png',
+    './engIcon.png',
+    './icon-store-512.png',
+    './MathIcon.jpg',
+    './MicroBio.png',
+    './musicIcon.png',
+    './organicChem.png',
+    './physIcon.png',
+    './favicon.ico',
+    './afterschoolstore.webmanifest'
 
 ]
 
